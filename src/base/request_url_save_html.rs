@@ -6,7 +6,12 @@ fn main() {
 
     let output = "baidu.html";
 
+    // html to markdown
+    println!("fetch body to Markdown ...");
+    let md = html2md::parse_html(&body);
+
     fs::write(output, contents).unwrap();
+
 
 }
 
