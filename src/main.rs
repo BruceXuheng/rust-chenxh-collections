@@ -1,6 +1,19 @@
-use std::fs;
+use std::{fs, io, cmp::Ordering};
+
+use rand::Rng;
 
 fn main() {
+
+    // 1、猜数字
+    // guess_number();
+
+    // 2、变量和可变性 https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html
+    variable_function();
+
+    // 3、数据类型
+    data_type();
+
+
     println!("fucntion add {}", apply(1, 2, function1));
     println!("function multiplication {}", apply(1, 2, function2));
 
@@ -48,6 +61,75 @@ fn main() {
 
 }
 
+fn guess_number(){
+    let secret_number = rand::thread_rng().gen_range(1..100);
+    loop {
+        
+        println!("Guess th number?");
+        let mut guess = String::new();
+        
+        io::stdin().read_line(&mut guess).expect("Filed to read lien");
+        
+        let guess:u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        
+        match guess.cmp(&secret_number) {
+            Ordering::Less =>{println!("small")}
+            Ordering::Greater =>{println!("big")}
+            Ordering::Equal =>{println!("Lucky");break;}
+        }
+    }
+}
+
+
+// 变量和可变性 演示方法
+fn variable_function() {
+    let x1 = 5;
+    // 变量
+    let mut x2 = 5;
+    x2 = 7;
+
+    // 常量
+    const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+
+    // 阴影
+    {
+        let x1 = 3;
+        println!("作用域中:{}",x1);
+    }
+    println!("作用域外:{}",x1);
+
+    let mut space = "   ";
+    let space = space.len();
+    println!("阴影 space {}",space);
+
+}
+
+// Rust 有四种主要的标量类型： 整数、浮点数、布尔值和字符
+fn data_type() {
+    // 整数
+    let i1 = b'A';
+    let i2 = 8;
+    // 浮点
+    let i3 = 2.0;
+    let i4:f32 = 3.00;
+
+    
+    // remainder
+    let remainder = 43 % 5;
+
+    // 布尔
+    let i4 = true;
+
+    // 字符
+    let c = 'Z';
+
+    // 元组
+    
+}
+
 // 函数的返回值
 fn apply(value: i8, value2: i8, f: fn(i8, i8) -> i8) -> i8 {
     f(value, value2)
@@ -59,6 +141,7 @@ fn function1(value: i8, value2: i8) -> i8 {
 
 fn function2(value: i8, value2: i8) -> i8 {
     value * value2
+    
 }
 
 fn pi() -> f64 {
